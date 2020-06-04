@@ -1,7 +1,11 @@
 ----RetirementHomes Copyright (C) 2020 Shrooblord
 --Create a button on all Residence Buildings that switches between three states: default vanilla behaviour, Retirement Home (Seniors take priority), or Workhouse (Seniors evicted if a younger person is looking for a home)
 --  Heavily hijacked ChoCGi's "Disable Drone Maintenance" script because it did almost everything I needed from a UI / UX perspective, and made for some excellent training wheels.
+--  Also took inspiration from SkiRich's "Career A.I." for how to shuffle Colonists around in a sane per-8h basis, while respecting Dome/Passage filters, etc. that the user already had in-place (but not any actual functional code; their LICENSE prevents this -- so all similar code is my own work).
 
+--#region init
+--Perform the change: set a flag so that, when the "hourly" tick comes around (see the onMsgs section), we know what to do: to migrate, or not to migrate... that is the question
+--  currently just a copy-pasta with a name change. nothing is actually happening here yet
 local function SetSeniorAcceptanceState(obj, maintenance)
 	obj.maintenance_phase = false
 	if maintenance then
@@ -20,7 +24,12 @@ local function SetSeniorAcceptanceState(obj, maintenance)
 		obj:ResetMaintenanceRequests()
 	end
 end
+--#endregion
 
+
+--#region === *** OnMsg *** === --
+--#region HUD
+--  currently just a copy-pasta. nothing is actually happening here yet
 function OnMsg.ClassesPostprocess()
 	local RetAllOfClass = ChoGGi.ComFuncs.RetAllOfClass
 	local PopupToggle = ChoGGi.ComFuncs.PopupToggle
@@ -98,3 +107,10 @@ function OnMsg.ClassesPostprocess()
 	})
 
 end --OnMsg
+--#endregion
+
+--#region hourly-ticks
+--...see SkiRich's "Career A.I." as an example...
+--#endregion
+
+--#endregion
